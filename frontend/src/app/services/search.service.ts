@@ -91,9 +91,24 @@ export class SearchService {
       }
 
       if (!(term === null || term === '')) {
-        const termregex = new RegExp(escape(term).replace(/\s+/g, ' '), 'i');
-        return (termregex.test(elem.i) || termregex.test(elem.u) || termregex.test(elem.n.replace(/\s+/g, ' ')));
+       
+      var splitted= term.split(" ",100);
+
+       var num :number =0;
+       var len :number=splitted.length;
+       var f : boolean= true;
+
+       for (num=0; num< len ; num++ ){
+
+        const termregex = new RegExp(escape(splitted[num]).replace(/\s+/g, ' '), 'i');
+        f= f &&        (termregex.test(elem.n.replace(/\s+/g, ' ')));
+
+       }
+       const termregex = new RegExp(escape(term).replace(/\s+/g, ' '), 'i');
+
+       return f || (termregex.test(elem.i) || termregex.test(elem.u) );
       }
+      
 
       return true;
 
